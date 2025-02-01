@@ -1,0 +1,30 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <h1>TODO LIST</h1>
+
+    <form method="get" action="{% url 'todo:task_list' %}">
+        <!-- フォーム内容がここに入る -->
+    </form>
+
+    <table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+        <th>タスク名</th>
+        <th>期限</th>
+        <th>編集</th>
+        <th>削除</th>
+        </tr> 
+    </thead>        
+    <tbody>
+    {% for task in tasks %}
+        <tr>
+        <td>{{ task.title }}</td>
+        <td>{{ task.expiry }}</td>
+        <td><a href="{% url 'todo:task_update' pk=task.id %}" class="btn btn-info">編集</a></td>
+        <td><a href="{% url 'todo:task_delete' pk=task.id %}" class="btn btn-danger">削除</a></td>
+        </tr>
+    {% endfor %} 
+    </tbody>
+    </table>
+    {% endblock %}      

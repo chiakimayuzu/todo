@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>TODO Detail</h1>
+
+<form method="GET"
+    {% csrf_token %}
+    {{ form.as_p }}>
+</form>
+
+<tbody>
+    <div>
+        <p>todo: {{ object.title }}</p>
+        <p>説明: {{ object.description }}</p>
+        <p>todo期限: {{object.expiry }}</p>
+    </div>
+    
+    <td><a href="{% url 'todo:task_update' pk=task.id %}" class="btn btn-info">編集</a></td>
+    <td><a href="{% url 'todo:task_delete' pk=task.id %}" class="btn btn-danger">削除</a></td>
+
+</tbody>
+
+{% endblock %}

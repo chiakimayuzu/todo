@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>タスクを編集<h1>
+
+<form method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+
+<a class="navbar-brand" href="{% url 'todo:todo/task_list.html' %}">戻る</a>
+<input type="submit" value="更新">
+</form>
+
+{% endblock %}
