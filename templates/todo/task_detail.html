@@ -7,16 +7,22 @@
     {{ form.as_p }}>
 </form>
 
+<table class="table table-striped table-bordered">
 <tbody>
     <div>
-        <p>todo: {{ object.title }}</p>
-        <p>説明: {{ object.description }}</p>
-        <p>todo期限: {{object.expiry }}</p>
+        <th>タスク名: {{ object.title }}</th>
+        <th>説明: {{ object.description }}</th>
+        <th>期限: {{object.expiry }}</th>
     </div>
-    
-    <td><a href="{% url 'todo:task_update' pk=task.id %}" class="btn btn-info">編集</a></td>
-    <td><a href="{% url 'todo:task_delete' pk=task.id %}" class="btn btn-danger">削除</a></td>
+</tbody>
+</table>
 
+<tbody>
+    <tr>    
+        <th><a href="{% url 'todo:task_update' pk=task.id %}" class="btn btn-info">編集</a></th>
+        <th><a href="{% url 'todo:task_delete' pk=task.id %}" class="btn btn-danger">削除</a></th>
+        <th><a class="navbar-brand" href="{% url 'todo:task_list' %}">戻る</a></th>
+    </tr> 
 </tbody>
 
 {% endblock %}

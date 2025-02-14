@@ -3,7 +3,14 @@ from .forms import RegistForm, UpdateForm
 from .models import Task
 from django.shortcuts import render
 from django.views.generic import DetailView,CreateView,TemplateView,ListView,DeleteView,UpdateView
+from django.http import JsonResponse
 
+
+def check_title(request): #入力されたタイトルが既に存在するかを確認
+    title = request.GET.get('title')  # フォームの入力値を取得
+    exists = Task.objects.filter(title=title).exists()  # タイトルがすでに存在するか確認
+    return JsonResponse({'exists':exists})  # exists が True ならタイトルが存在、エラー表示
+ 
 class HomeView(TemplateView):
     template_name = 'home.html'
 

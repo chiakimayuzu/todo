@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    RegistView, HomeView, TaskDeleteView,TaskListView,TaskDetailView,TaskUpdateView)
+    RegistView, HomeView, TaskDeleteView,TaskListView,TaskDetailView,TaskUpdateView, check_title)
 
 app_name = 'todo'
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     path('task_detail/<int:pk>/',TaskDetailView.as_view(),name='task_detail'),
     path('task_update/<int:pk>/',TaskUpdateView.as_view(),name='task_update'),
     path('task_delete/<int:pk>/',TaskDeleteView.as_view(),name='task_delete'),
+    path('check_title/', check_title, name='check_title'),  # タイトル重複チェック用API
     ]
+    

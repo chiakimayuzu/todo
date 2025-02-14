@@ -5,9 +5,38 @@
 <form method="POST">
 {% csrf_token %}
 {{ form.as_p }}
-
-<a class="navbar-brand" href="{% url 'todo:todo/task_list.html' %}">戻る</a>
+<span id="title_error" style="color:red; display:none;">タイトルがすでに存在します。</span>
+<a class="navbar-brand" href="{% url 'todo:task_list' %}">戻る</a>
 <input type="submit" value="更新">
 </form>
-
-{% endblock %}
+<script>
+    document.getElementById('id_title').addEventListener('input', function() {
+       var title = this.value;
+       
+       if (title) {
+             // サーバーにタイトルの重複を確認するリクエストを送信
+          fetch(`/todo/check_title/?title=${encodeURIComponent(title)}`)
+                  // check_titleでviews.pyの関数を呼び出している
+                  //ユーザーが入力したタイトルをサーバーに送って、そのタイトルがすでに存在するかどうかを確認する
+                  //encodeURIComponentはhtmlとして適切な形にtitleを変換するという意味
+                  //クエリパラメータとはwebサーバーに情報を伝えるためにURLに付加する文字列
+                  //基本構造は「?」+「変数名(title)」+「=」+「変数の値」で、複数のパラメータがある場合は「&」でつなげる
+                .then(response => response.json())  // サーバーから返ってきたデータをJSON形式に変換して、次の処理に渡す
+                .then(data => { //サーバーから返ってきたデータ（data）を使って、エラー表示の処理をする//
+                   const errorSpan = document.getElementById('title_error');
+                   //エラーメッセージを表示するためのHTML要素を取得して変数に保存する//
+       
+                      // サーバーが `data.exists` を True で返した場合（タイトルが重複している）
+                   if (data.exists) {
+                         errorSpan.style.display = 'block';} // existsがtrue(同一データ有)ならエラー表示
+                      else{ 
+                         errorSpan.style.display = 'none';}  // エラー非表示
+                      
+                   })
+                   .catch(error => console.error('Error:', error));  // エラー処理
+          }
+       });
+       </script>
+       
+    {% endblock %}
+{% endblock %}  
