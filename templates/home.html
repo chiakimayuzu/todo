@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム画面です</title>
 </head>
+
+<div>
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="{% url 'todo:home' %}">ホーム</a>
+    <a class="navbar-brand" href="{% url 'todo:task_list' %}">todoリスト</a>
+    <a class="navbar-brand" href="{% url 'todo:regist_task' %}">task作成</a> 
+</div>
+
 <body>
     ホーム画面です
 </body>
+
+
 </html>

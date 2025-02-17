@@ -7,6 +7,14 @@
         <!-- フォーム内容がここに入る -->
     </form>
 
+
+
+    <div>
+    <a href="?sort=created_at">登録順</a>| 
+    <a href="?sort=due_date">期限順</a> 
+    </div>
+
+<div>
     <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -27,4 +35,5 @@
     {% endfor %} 
     </tbody>
     </table>
+</div>
     {% endblock %}      

@@ -10,7 +10,7 @@ def check_title(request): #入力されたタイトルが既に存在するか�
     title = request.GET.get('title')  # フォームの入力値を取得
     exists = Task.objects.filter(title=title).exists()  # タイトルがすでに存在するか確認
     return JsonResponse({'exists':exists})  # exists が True ならタイトルが存在、エラー表示
- 
+
 class HomeView(TemplateView):
     template_name = 'home.html'
 
@@ -27,6 +27,8 @@ class TaskListView(ListView): #task一覧を表示するページ
 
     def get_queryset(self):
         query = super().get_queryset()
+
+        #絞り込み・フィルター・並び替え検索のためにクエリを取得しておく
         task_title = self.request.GET.get('task_title', None) 
         task_expiry = self.request.GET.get('task_expiry', None)
 
@@ -35,8 +37,24 @@ class TaskListView(ListView): #task一覧を表示するページ
 
         if task_expiry:
             query = query.filter(expiry=task_expiry)
+        
+
+        #★並び替え設定
+        sort_options = {
+            'created_at':'created_at', #登録順のsort
+            'due_date':'expiry' ,  #task期限が早い順のsort
+        }   
+        # 並び替え基準を辞書(この場合sort_options)で定義
+        #sort_optionsは増やすことができる(拡張可能)
+
+        sort_by = self.request.GET.get('sort','created_at')
+        # クエリパラメータ 'sort' を取得（デフォルトは 'created_at'）
+
+        query = query.order_by(sort_options.get(sort_by, 'created_at'))
+        #並び替えを設定していない場合はcreated_atで表示(デフォルト設定)
 
         return query
+
 
 class TaskDetailView(DetailView):
     model = Task

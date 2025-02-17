@@ -1,14 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>タスクを編集<h1>
+   <form method="POST">
+      {% csrf_token %}
 
-<form method="POST">
-{% csrf_token %}
-{{ form.as_p }}
-<span id="title_error" style="color:red; display:none;">タイトルがすでに存在します。</span>
-<a class="navbar-brand" href="{% url 'todo:task_list' %}">戻る</a>
-<input type="submit" value="更新">
-</form>
+      <div>
+         タスク名：{{ form.title }}  <!-- タイトル -->
+     </div>
+     <span id="title_error" style="color:red; display:none;">タイトルがすでに存在します。</span>
+      <!-- デフォルト(title空白)がdisplay:none -->
+      
+      <div>
+         説明：{{ form.description }}  <!-- 詳細説明 -->
+     </div>
+     
+     <div>
+         期限：{{ form.expiry }}  <!-- 期限 -->
+     </div>
+      
+      <input type="submit" value="タスク登録">
+      
+      <div>
+      <a class="navbar-brand" href="{% url 'todo:task_list' %}">戻る</a>
+      </div>
+   </form>
+
+
 <script>
     document.getElementById('id_title').addEventListener('input', function() {
        var title = this.value;
