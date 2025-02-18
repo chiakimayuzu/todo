@@ -41,14 +41,15 @@ class TaskListView(ListView): #task一覧を表示するページ
 
         #★並び替え設定
         sort_options = {
-            'created_at':'created_at', #登録順のsort
+            'created_at':'created_at', #登録した順番(古い順)のsort
+            '-created_at':'-created_at', #登録した順番(新しい順)のsort
             'due_date':'expiry' ,  #task期限が早い順のsort
         }   
         # 並び替え基準を辞書(この場合sort_options)で定義
         #sort_optionsは増やすことができる(拡張可能)
 
-        sort_by = self.request.GET.get('sort','created_at')
-        # クエリパラメータ 'sort' を取得（デフォルトは 'created_at'）
+        sort_by = self.request.GET.get('sort','-created_at')
+        # クエリパラメータ 'sort' を取得（デフォルトは '-created_at'）
 
         query = query.order_by(sort_options.get(sort_by, 'created_at'))
         #並び替えを設定していない場合はcreated_atで表示(デフォルト設定)
