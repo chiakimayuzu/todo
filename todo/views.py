@@ -4,7 +4,7 @@ from .models import Task
 from django.shortcuts import render
 from django.views.generic import DetailView,CreateView,TemplateView,ListView,DeleteView,UpdateView
 from django.http import JsonResponse
-
+from django.db.models import Q
 
 def check_title(request): #入力されたタイトルが既に存在するかを確認
     title = request.GET.get('title')  # フォームの入力値を取得
@@ -29,11 +29,11 @@ class TaskListView(ListView): #task一覧を表示するページ
         query = super().get_queryset()
 
         #絞り込み・フィルター・並び替え検索のためにクエリを取得しておく
-        task_title = self.request.GET.get('task_title', None) 
+        keyword = self.request.GET.get('keyword', None) 
         task_expiry = self.request.GET.get('task_expiry', None)
 
-        if task_title:
-            query = query.filter(title__icontains=task_title)
+        if keyword:
+            query = query.filter(Q(title__icontains=keyword) | Q(description__icontains=keyword))
 
         if task_expiry:
             query = query.filter(expiry=task_expiry)

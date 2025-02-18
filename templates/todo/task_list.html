@@ -6,7 +6,12 @@
     <form method="get" action="{% url 'todo:task_list' %}">
         <!-- フォーム内容がここに入る -->
     </form>
+    
 
+    <form method="get" action="{% url 'todo:task_list' %}">
+        <input type="text" name="keyword" placeholder="タイトルまたは説明で検索" value="{{ request.GET.keyword }}">
+        <button type="submit">検索</button><br>
+    </form>
 
 
     <div>
