@@ -56,7 +56,6 @@ class TaskListView(ListView): #task一覧を表示するページ
 
         return query
 
-
 class TaskDetailView(DetailView):
     model = Task
     template_name = 'todo/task_detail.html'

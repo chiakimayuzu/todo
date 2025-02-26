@@ -11,11 +11,25 @@
       
       <div>
          説明：{{ form.description }}  <!-- 詳細説明 -->
-     </div>
+      </div>
      
-     <div>
-         期限：{{ form.expiry }}  <!-- 期限 -->
-     </div>
+      <div>
+      期限：{{ form.expiry }} 
+      <span id="calendar-icon">📅</span> <!-- カレンダーアイコン -->
+      </div>
+
+     <script>
+      $(document).ready(function () {
+          $(".datepicker").datepicker({
+              dateFormat: "yy-mm-dd",
+              minDate: 0 // 今日以降の日付のみ選択可能
+          });
+  
+          $("#calendar-icon").click(function () {
+              $(".datepicker").focus(); // アイコンをクリックしたら入力欄にフォーカス
+          });
+      });
+  </script>
       
       <input type="submit" value="タスク登録">
 

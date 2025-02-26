@@ -3,9 +3,9 @@ from .models import Task
 
 class RegistForm(forms.ModelForm):
     title = forms.CharField(label='タスク名')
-    description = forms.CharField(label='詳細説明')
+    description = forms.CharField(label='詳細説明') 
     expiry = forms.DateField(
-    label='期限',widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+    label='期限',widget=forms.DateInput(attrs={'class': 'datepicker', 'placeholder': 'YYYY-MM-DD'}))
 
     class Meta:
         model = Task
@@ -14,7 +14,8 @@ class RegistForm(forms.ModelForm):
 class UpdateForm(forms.ModelForm):
     title = forms.CharField(label='タスク名')
     description = forms.CharField(label='詳細説明')
-    expiry = forms.DateField(label='期限')
+    expiry = forms.DateField(
+    label='期限',widget=forms.DateInput(attrs={'class': 'datepicker', 'placeholder': 'YYYY-MM-DD'}))
 
     class Meta:
         model = Task
